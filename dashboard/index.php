@@ -10,6 +10,14 @@ if(!$login_status){
 	header("location:../login.php");
 	exit();
 }
-
-echo "Halaman Dashboard";
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Halaman Dashboard</title>
+</head>
+<body>
+	Selamat datang di dashboard, <a href="logout.php">logout</a>
+</body>
+</html>

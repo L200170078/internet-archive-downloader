@@ -74,5 +74,18 @@ class Login
 		return false;
 
 	}
+
+	public function logout($conn)
+	{
+		if(isset($_COOKIE['idmanager_token'])){
+			$token = mysqli_escape_string($conn,$_COOKIE['idmanager_token']);
+			$now = mysqli_escape_string($conn,date("Y-m-d H:i:s"));
+			unset($_COOKIE['idmanager_token']);
+			setcookie("idmanager_token",null,$now,"/");
+			$query = mysqli_query($conn, "UPDATE tb_admin_log SET expired = '$now' WHERE token = '$token'");
+		}
+
+		return true;
+	}
 }
 ?>
