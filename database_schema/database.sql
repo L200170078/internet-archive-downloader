@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 12/05/2020 18:00:12
+ Date: 13/05/2020 18:59:33
 */
 
 SET NAMES utf8mb4;
@@ -28,6 +28,11 @@ CREATE TABLE `tbl_category`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of tbl_category
+-- ----------------------------
+INSERT INTO `tbl_category` VALUES (1, 'Nintendo 64 Internet Archive');
+
+-- ----------------------------
 -- Table structure for tbl_database
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_database`;
@@ -37,12 +42,12 @@ CREATE TABLE `tbl_database`  (
   `link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
-  `updated_at` timestamp(0) NULL DEFAULT NULL,
   `tbl_category_id` int(11) NOT NULL,
+  `size` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_tbl_database_tbl_category_idx`(`tbl_category_id`) USING BTREE,
   CONSTRAINT `fk_tbl_database_tbl_category` FOREIGN KEY (`tbl_category_id`) REFERENCES `tbl_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1910 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -75,6 +80,18 @@ CREATE TABLE `tbl_users_log`  (
   `useragent` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `stat` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tbl_users_log
+-- ----------------------------
+INSERT INTO `tbl_users_log` VALUES (4, '2020-05-12 13:10:09', '2020-05-12 19:10:09', '07de11c1f12f62e0b824acf74e8d524ffd78e698', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0', 1);
+INSERT INTO `tbl_users_log` VALUES (5, '2020-05-12 20:36:07', '2020-05-19 20:36:07', '6c5cf04103530ca544c3b16943522d65a180c822', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0', 1);
+
+-- ----------------------------
+-- View structure for v_tbl_database
+-- ----------------------------
+DROP VIEW IF EXISTS `v_tbl_database`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_tbl_database` AS SELECT tbl_database.id, tbl_database.name, tbl_database.link, tbl_database.`status`, tbl_database.created_at, tbl_category.`name` as category FROM tbl_database INNER JOIN tbl_category ON tbl_category.id=tbl_database.tbl_category_id ;
 
 SET FOREIGN_KEY_CHECKS = 1;

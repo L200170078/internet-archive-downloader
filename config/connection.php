@@ -1,5 +1,5 @@
 <?php
-$domain	= "http://localhost/internet-archive-downloader/";
+$domain	= "http://localhost/internet-archive-downloader";
 $server = "localhost";
 $user = "root";
 $password = "";
